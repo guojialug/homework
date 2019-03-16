@@ -1,59 +1,98 @@
-1.16
-#include<stdio.h>
-void main()
-{
-    int X,Y,Z,a;
-    printf("please input the X");
-    scanf("%d",&X);
-    printf("please input the Y");
-    scanf("%d",&Y);
-    printf("please input the Z");
-    scanf("%d",&Z);
-    if(X<Y)
-    {
-        a=Y;
-        Y=X;
-        X=a;
-    }
+#include <stdio.h>
+#include <stdlib.h>
 
-    if(X<Z)
-    {
-        a=X;
-        X=Z;
-        Z=a;
-    }
-    if(Y<Z)
-    {
-        a=Y;
-        Y=Z;
-        Z=a;
-    }
-    printf("%d%d%d",X,Y,Z);
+#define maxsize 1000
+
+typedef float datatype;
+
+typedef struct 
+{
+    datatype data[maxsize];
+    int last;
+}SeqList;
+
+SeqList *init_seqlist()
+{
+    SeqList *L;
+    L = (SeqList*)malloc(sizeof(SeqList));
+    L->last = -1;
+    return L;
 }
 
-1.20
-#include<stdio.h>
-#include<stdlib.h>
-#include<string.h>
-#define N 10
+int insert_seqlist(SeqList *L, int i, datatype e)
+{
+    int j;
+    
+    if (L->last == maxsize - 1)
+    {
+        printf("list is already full\n");
+        return -1;
+    }
+    
+    if (i<1 || i>L->last+2 )
+    {
+        printf("wrong position\n");
+        return -1;
+    }
+    
+    for (j=L->last; j>=i-1; --j)
+    {
+        L->data[j+1] = L->data[j];    
+    }
+    
+    L->data[i-1] = e;
+    L->last++;
+    
+    return 1;
+}
+
+void Delete( int  i, List *PtrL ) 
+{
+    int  j; 
+
+    if( i < 1 || i > PtrL->Last+1 )
+    {
+        printf (“不存在第%d个元素”, i );  
+        return ;  
+    } 
+
+    for ( j = i; j <= PtrL->Last; j++ ) 
+        PtrL->Data[j-1] = PtrL->Data[j];
+ 
+    PtrL->Last--;  
+ 
+    return 1;    
+} 
+
+
+void print_seqlist(SeqList *L)
+{
+    int i;
+    for (i=1; i<L->last; ++i)
+    {
+        printf("%f -> ", L->data[i-1]);
+    }
+    printf("%f\n", L->data[L->last]);
+}
+
 int main()
 {
-	int i;
-	float x;
-	printf("input the x:\n");
-	scanf("%f",&x);
-	float a[N];
-	int n;
-	printf("please input the n:\n");
-	scanf("%d",&n);
-	printf("please input a[0]-a[n-1]:\n");
-	for(i=0;i<n;i++)
-	scanf("%f",&a[i]);
-	float result=a[n-1];
-	for(i=n-1;i>0;i--)
-	{
-		result=a[i-1]+x*result;
-	}
-	printf("the polynomail value is %f",result);
-	return 0;
+    int i = 0;
+    
+    SeqList* L = init_seqlist();
+    for (i=0; i<10; ++i)
+    {
+        insert_seqlist(L, i+1, i*i);
+    }
+    printf("list len = %d\n", L->last+1); 
+    
+    print_seqlist(L);
+  
+    insert_seqlist(L, 5, 222);
+    print_seqlist(L);
+	
+    delete_seqlist(3,L);
+    print_seqlist(L);
+
+    return 1;
 }
