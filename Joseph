@@ -1,0 +1,68 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+typedef struct node{
+    int num;
+    int data;
+    struct node *next;
+}Node;
+
+
+Node *link_create(int n)
+{
+    Node *p,*q,*head;
+    int i;
+    p=(Node *)malloc(sizeof(Node));
+    head=p;
+    p->num=1;
+    printf("input the 1th data:");
+    scanf("%d",&p->data);
+
+    for(i=2;i<=n;i++)
+    {
+        q=(Node *)malloc(sizeof(Node));
+        q->num=i;
+        printf("input the %d th data:",i);
+        scanf("%d",&q->data);
+        p->next=q;
+        p=q;
+    }
+    p->next=head;
+    return head;
+}
+
+
+void link_process(Node *head,int m)
+{
+    int i;
+    Node *p=head;
+    Node *tmp1;
+
+    while(p->next!=p)
+    {
+        for(i=1;i<m;i++)
+        {
+            tmp1=p;
+            p=p->next;
+        }
+        printf("%d",p->num);
+        m=p->data;
+        tmp1->next=p->next;
+        free(p);
+        p=tmp1->next;
+    }
+    
+    printf("%d",p->num);
+    free(p);
+}
+
+
+int main()
+
+{
+    Node *head=link_create(7);
+    link_process(head,6);
+    system("pause");
+    return 0;
+}
+
