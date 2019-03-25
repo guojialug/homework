@@ -1,15 +1,14 @@
 #include<stdio.h>
 #include<stdlib.h>
-
 typedef struct node{
     int num;
     int data;
     struct node *next;
 }Node;
 
-
 Node *link_create(int n)
 {
+
     Node *p,*q,*head;
     int i;
     p=(Node *)malloc(sizeof(Node));
@@ -31,10 +30,11 @@ Node *link_create(int n)
     return head;
 }
 
-
-void link_process(Node *head,int m)
+void link_process(Node *head)
 {
-    int i;
+    int i,m;
+    printf("input the m:");
+    scanf("%d",&m);
     Node *p=head;
     Node *tmp1;
 
@@ -45,24 +45,26 @@ void link_process(Node *head,int m)
             tmp1=p;
             p=p->next;
         }
-        printf("%d",p->num);
+        printf("%5d",p->num);
         m=p->data;
         tmp1->next=p->next;
         free(p);
         p=tmp1->next;
     }
-    
-    printf("%d",p->num);
+    printf("%5d",p->num);
     free(p);
 }
 
+    int main()
 
-int main()
+    {
+        int n;
+        printf("input the n:");
+        scanf("%d",&n);
+        Node *head=link_create(n);
+        link_process(head);
+        system("pause");
+        return 0;
+    }
 
-{
-    Node *head=link_create(7);
-    link_process(head,6);
-    system("pause");
-    return 0;
-}
 
