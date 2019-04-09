@@ -1,14 +1,14 @@
 #include<stdio.h>
 int cont=1;
 void print(int str[],int n);
-void dispatch(int str[],int k,int n)
+void perm(int str[],int k,int n)
 {
 	int i,temp;
 	if(k==n-1)print(str,n);//k和n-1相等，即一趟递归走完
 	else{
 		for(i=k;i<n;i++){//把当前节点元素与后续节点元素交换
 			temp=str[k]; str[k]=str[i]; str[i]=temp;//交换
-			dispatch(str,k+1,n);//把下一个节点元素与后续节点元素交换
+			perm(str,k+1,n);//把下一个节点元素与后续节点元素交换
 			temp=str[i]; str[i]=str[k]; str[k]=temp;//恢复原状
 		}
 	}
@@ -48,7 +48,7 @@ int main()
 	scanf("%d",&n);
 	for(i=0;i<n;i++)
 		str[i]=i+1;
-	dispatch(str,0,n);
+	perm(str,0,n);
 	printf("\n");
 	return 0;
 }
